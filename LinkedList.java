@@ -223,9 +223,9 @@ public class LinkedList {
 		}
 		else{
 			while(current.next != null && current.next != node){
-				current.next = current.next;
-			}
-			current.next = current.next.next;
+				current = current.next;
+			 }
+			 current.next = current.next.next;
 		}
 		size--;
 	}
@@ -278,5 +278,4 @@ public class LinkedList {
 		}
 		return str;
 	}
-	
 }
