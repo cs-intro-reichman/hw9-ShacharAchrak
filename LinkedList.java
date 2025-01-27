@@ -78,7 +78,28 @@ public class LinkedList {
 	 *         if index is negative or greater than the list's size
 	 */
 	public void add(int index, MemoryBlock block) {
-		//// Write your code here
+	    Node newNode = new Node(block);
+
+    if (index == 0) {
+        newNode.next = first;
+        first = newNode; 
+        if (size == 0) {
+            last = newNode;
+        }
+    }
+
+    else if (index == size) {
+        last.next = newNode;
+        last = newNode;
+    }
+  
+    else {
+        Node prev = getNode(index - 1);
+        newNode.next = prev.next;
+        prev.next = newNode;
+    }
+    size++;
+
 	}
 
 	/**
@@ -89,9 +110,17 @@ public class LinkedList {
 	 *        the given memory block
 	 */
 	public void addLast(MemoryBlock block) {
-		//// Write your code here
+		Node newNode = new Node(block);
+		if (size == 0) {
+			first = newNode;
+			last = newNode;
+		} else {
+			last.next = newNode;
+			last = newNode;
+		}
+		size++;
 	}
-	
+
 	/**
 	 * Creates a new node that points to the given memory block, and adds it 
 	 * to the beginning of this list (the node will become the list's first element).
@@ -100,7 +129,15 @@ public class LinkedList {
 	 *        the given memory block
 	 */
 	public void addFirst(MemoryBlock block) {
-		//// Write your code here
+	    Node newNode = new Node(block);
+    if (size == 0) {
+        first = newNode;
+        last = newNode;
+    } else {
+        newNode.next = first;
+        first = newNode;
+    }
+    size++;
 	}
 
 	/**
@@ -113,9 +150,12 @@ public class LinkedList {
 	 *         if index is negative or greater than or equal to size
 	 */
 	public MemoryBlock getBlock(int index) {
-		//// Replace the following statement with your code
-		return null;
-	}	
+		Node current = first;
+		for (int i = 0; i < index; i++) {
+			current = current.next;
+		}
+		return current.block;
+	}
 
 	/**
 	 * Gets the index of the node pointing to the given memory block.
@@ -125,7 +165,15 @@ public class LinkedList {
 	 * @return the index of the block, or -1 if the block is not in this list
 	 */
 	public int indexOf(MemoryBlock block) {
-		//// Replace the following statement with your code
+		Node current = first;
+		int index = 0;
+		while (current != null) {
+			if (current.block.equals(block)) {
+				return index;
+			}
+			current = current.next;
+			index++;
+		}
 		return -1;
 	}
 
@@ -136,7 +184,25 @@ public class LinkedList {
 	 *        the node that will be removed from this list
 	 */
 	public void remove(Node node) {
-		//// Write your code here
+		if (node == first) {
+			first = first.next;
+			if (first == null) {
+				last = null;
+			}
+			size--;
+			return;
+		}
+	
+		Node current = first;
+		while (current != null && current.next != node) {
+			current = current.next;
+		}
+		current.next = node.next;
+		if (node == last) {
+			last = current;
+		}
+	
+		size--;
 	}
 
 	/**
@@ -147,7 +213,23 @@ public class LinkedList {
 	 *         if index is negative or greater than or equal to size
 	 */
 	public void remove(int index) {
-		//// Write your code here
+		if (index == 0) {
+			first = first.next;
+			if (first == null) {
+				last = null;
+			}
+			size--;
+			return;
+		}
+
+		Node prev = getNode(index - 1);
+		Node toRemove = prev.next;
+		prev.next = toRemove.next;
+		if (toRemove == last) {
+			last = prev;
+		}
+	
+		size--;
 	}
 
 	/**
@@ -158,8 +240,29 @@ public class LinkedList {
 	 *         if the given memory block is not in this list
 	 */
 	public void remove(MemoryBlock block) {
-		//// Write your code here
-	}	
+		if (first.block.equals(block)) {
+			first = first.next;
+			if (first == null) {
+				last = null;
+			}
+			size--;
+			return;
+		}
+
+		Node current = first;
+		while (current.next != null && !current.next.block.equals(block)) {
+			current = current.next;
+		}
+
+		Node toRemove = current.next;
+		current.next = toRemove.next;
+	
+		if (toRemove == last) {
+			last = current;
+		}
+	
+		size--;
+	}
 
 	/**
 	 * Returns an iterator over this list, starting with the first element.
@@ -172,7 +275,6 @@ public class LinkedList {
 	 * A textual representation of this list, for debugging.
 	 */
 	public String toString() {
-		//// Replace the following statement with your code
-		return "";
+		return "0";
 	}
 }
