@@ -125,15 +125,11 @@ public class LinkedList {
 	 */
 	public void addLast(MemoryBlock block) {
 		Node newNode = new Node(block);
-		if (first == last) {
+		if (first == null) {
 			first = newNode;
 			last = newNode;
 		} else {
-			Node current = first;
-			while(current.next != null){
-				current = current.next;
-			}
-			current.next = newNode;
+			last.next = newNode;
 			last = newNode;
 		}
 		size++;
@@ -281,6 +277,6 @@ public class LinkedList {
 			listItr.next();
 		}
 		return str;
-		}
+	}
 	
 }
