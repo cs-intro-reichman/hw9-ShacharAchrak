@@ -1,3 +1,5 @@
+
+
 /**
  * Represents a managed memory space. The memory space manages a list of allocated 
  * memory blocks, and a list free memory blocks. The methods "malloc" and "free" are 
@@ -115,7 +117,20 @@ public class MemorySpace {
 	 * In this implementation Malloc does not call defrag.
 	 */
 	public void defrag() {
-		/// TODO: Implement defrag test
-		//// Write your code here
+		for(int i=0; i<this.freeList.getSize(); i++){
+			MemoryBlock b = this.freeList.getBlock(i);
+			int sum = b.baseAddress + b.length;
+			ListIterator listItr = freeList.iterator();
+			while(listItr.hasNext()){
+				if(listItr.current.block.baseAddress == sum){
+					b.length += listItr.current.block.length;
+					this.freeList.remove(listItr.current);
+					defrag();
+				}
+				listItr.next();
+			}
+		}
+		return;
 	}
+
 }
